@@ -65,4 +65,8 @@ describe("rxjs_test", () => {
   it("subject", () => {});
 
   it("takeUntil", () => {});
+
+  it("토큰 대량 전송 기능 테스트", () => {
+    
+  });
 });
