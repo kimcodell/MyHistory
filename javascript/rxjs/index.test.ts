@@ -12,10 +12,6 @@ import greet from "../lib/greet"; //import 위해서 babel 세팅해줌
 jest.setTimeout(90000);
 
 describe("rxjs_test", () => {
-  it("test console log", () => {
-    console.log("hello");
-  });
-
   it("test greet", () => {
     greet();
   });
