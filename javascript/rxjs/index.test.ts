@@ -7,7 +7,8 @@ import {
   Subject,
   takeUntil,
 } from "rxjs";
-import greet from "../lib/greet";
+import greet from "../lib/greet"; //import 위해서 babel 세팅해줌
+
 jest.setTimeout(90000);
 
 describe("rxjs_test", () => {
@@ -43,13 +44,13 @@ describe("rxjs_test", () => {
 
     setTimeout(() => {
       stopSignal$.next("stop!");
-    }, 2000);
+    }, 5000);
 
     stocks$
       .pipe(
         bufferCount(100),
-        concatMap((stockCodes) => buyMany$(stockCodes))
-        // takeUntil(stopSignal$)
+        concatMap((stockCodes) => buyMany$(stockCodes)),
+        takeUntil(stopSignal$)
       )
       .subscribe({
         next: (v) => console.log(v),
