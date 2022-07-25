@@ -9,6 +9,7 @@ func UpperSkill() {
 	fmt.Println(sum(1, 2, 3, 4, 5, 6, 7))
 	deferTest()
 	mapTest()
+	errorHandling()
 }
 
 // 1. 가변 인수
@@ -48,4 +49,9 @@ func mapTest() {
 
 	delete(m, "c") //요소 키로 삭제. 키가 존재하지 않으면 아무 동작도 X.
 	fmt.Println(m)
+}
+
+// 4. 에러 처리
+func errorHandling() {
+
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"grammar/upper"
+	"grammar/goroutine"
 )
 
 //Basic 결과
@@ -75,12 +75,32 @@ import (
 // }
 
 // 함수 고급 스킬
+// func main() {
+// 	fmt.Println("start")
+// 	fmt.Println()
+
+// 	upper.UpperSkill()
+// 	fmt.Println("Finish Test 1")
+// 	fmt.Println()
+
+// 	fmt.Println("end")
+// }
+
+// 고루틴
 func main() {
 	fmt.Println("start")
 	fmt.Println()
 
-	upper.UpperSkill()
+	goroutine.GoroutineBasicTest()
 	fmt.Println("Finish Test 1")
+	fmt.Println()
+
+	goroutine.GoroutineWaitGroupTest()
+	fmt.Println("Finish Test 2")
+	fmt.Println()
+
+	goroutine.MutexTest()
+	fmt.Println("Finish Test 3")
 	fmt.Println()
 
 	fmt.Println("end")
