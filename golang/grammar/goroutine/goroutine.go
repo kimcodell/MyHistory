@@ -90,7 +90,12 @@ func DepositAndWithdraw(ac *account) {
 
 // 뮤텍스 사용의 문제점 //
 // 1. 고루틴에 의한 성능 개선 효과를 누리지 못함.
-// 2. 데드락 발생. 어떠한 고루틴도 뮤텍스를 획득하지 못하게 되어 프로그램이 완전히 멈춰버리는 것.
+// 2. 데드락 발생 가능. 어떠한 고루틴도 뮤텍스를 획득하지 못하게 되어 프로그램이 완전히 멈춰버리는 것.
+// 해결책 2가지
+// 1. 작업 영역의 분리
+// 2. 역할의 분리
+
+//---------------------------
 
 //채널
 func ChannelExample() {
@@ -105,9 +110,39 @@ func ChannelExample() {
 	//채널의 값이 비워지지 않으면 고루틴이 종료되지 않음. => 데드락
 	var msg1 string = <-messages
 	msg2 := <-messages
-	fmt.Println(msg1, msg2)
-
-	//버퍼를 가진 채널. 크기가 3
+	
+	//버퍼를 가진 채널. 크기가 3짜리
 	bufferedMessage := make(chan string, 3)
+	fmt.Println(msg1, msg2, bufferedMessage)
+}
+
+//---------------------------
+
+func square(wg *sync.WaitGroup, ch chan int) {
+	for n := range ch { // ❷ 데이터를 계속 기다린다. for n:= range chan 구문으로 채널의 데이터를 계속 기다릴 수 있음.
+		fmt.Printf("Square: %d\n", n*n)
+		time.Sleep(time.Second)
+	}
+	wg.Done() // ❹ for n:= range ch에서 채널을 계속 기다리기 때문에 실행되지 않는다. => 데드락!
+}
+
+func ChanWaitingTest() {
+	var wg sync.WaitGroup
+	ch := make(chan int)
+
+	wg.Add(1)
+	go square(&wg, ch)
+
+	for i := 0; i < 10; i++ {
+		ch <- i * 2 // ❶ 데이터를 넣는다.
+	}
+	close(ch) //채널을 모두 사용했다면 닫아서 끝내줘야 함. 이걸 추가하면 4번에서의 데드락 문제 해결! 채널이 닫히고 데이터가 모두 처리되면 2번도 끝나게 됨.
+	wg.Wait() // ❸ 작업 완료를 기다린다.
+}
+
+
+// select문 활용
+// select문을 활용하면 여러 채널을 기다릴 수 있음.
+func SelectTest() {
 
 }

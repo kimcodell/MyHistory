@@ -99,8 +99,12 @@ func main() {
 	fmt.Println("Finish Test 2")
 	fmt.Println()
 
-	goroutine.MutexTest()
-	fmt.Println("Finish Test 3")
+	// goroutine.MutexTest()
+	// fmt.Println("Finish Test 3")
+	// fmt.Println()
+
+	goroutine.ChanWaitingTest()
+	fmt.Println("Finish Test 4")
 	fmt.Println()
 
 	fmt.Println("end")
