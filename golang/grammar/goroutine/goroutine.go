@@ -91,3 +91,23 @@ func DepositAndWithdraw(ac *account) {
 // 뮤텍스 사용의 문제점 //
 // 1. 고루틴에 의한 성능 개선 효과를 누리지 못함.
 // 2. 데드락 발생. 어떠한 고루틴도 뮤텍스를 획득하지 못하게 되어 프로그램이 완전히 멈춰버리는 것.
+
+//채널
+func ChannelExample() {
+	//채널 인스턴스 생성. 일반적으로 생성하면 크기가 0인 채널이 생성됨.
+	var messages chan string = make(chan string)
+
+	//채널에 값 입력
+	messages <- "this is message"
+
+	//채널에서 값 빼기
+	//뺄 때 채널에 데이터가 없으면 데이터가 생길 때까지 대기
+	//채널의 값이 비워지지 않으면 고루틴이 종료되지 않음. => 데드락
+	var msg1 string = <-messages
+	msg2 := <-messages
+	fmt.Println(msg1, msg2)
+
+	//버퍼를 가진 채널. 크기가 3
+	bufferedMessage := make(chan string, 3)
+
+}
