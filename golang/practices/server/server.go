@@ -8,8 +8,8 @@ import (
 )
 
 type student struct {
-	Age int
-	Name string
+	Age   int
+	Name  string
 	Score int
 }
 
@@ -48,7 +48,7 @@ func barHandler(res http.ResponseWriter, req *http.Request) {
 
 func jsonHandler(res http.ResponseWriter, req *http.Request) {
 	student := student{20, "J", 99}
-	data, _ := json.Marshal(student);
+	data, _ := json.Marshal(student)
 	res.Header().Add("content-type", "application/json")
 	res.WriteHeader(http.StatusOK)
 	fmt.Fprint(res, string(data))
