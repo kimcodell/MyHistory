@@ -1,10 +1,17 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 )
+
+type student struct {
+	Age int
+	Name string
+	Score int
+}
 
 func main() {
 	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
@@ -15,6 +22,8 @@ func main() {
 
 	fs := http.FileServer(http.Dir("./statics"))
 	http.Handle("/public/", http.StripPrefix("/public/", fs))
+
+	http.HandleFunc("/json", jsonHandler)
 
 	fmt.Println("3000번 포트에서 서버 실행 중...")
 	http.ListenAndServe(":3000", nil)
@@ -35,4 +44,12 @@ func barHandler(res http.ResponseWriter, req *http.Request) {
 	}
 	id, _ := strconv.Atoi(values.Get("id")) // ❸ id값을 가져와서 int타입 변환
 	fmt.Fprintf(res, "Hello %s! id:%d", name, id)
+}
+
+func jsonHandler(res http.ResponseWriter, req *http.Request) {
+	student := student{20, "J", 99}
+	data, _ := json.Marshal(student);
+	res.Header().Add("content-type", "application/json")
+	res.WriteHeader(http.StatusOK)
+	fmt.Fprint(res, string(data))
 }
