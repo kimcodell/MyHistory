@@ -58,8 +58,6 @@ describe('rxjs_test', () => {
 
   it('takeUntil', () => {});
 
-  it('토큰 대량 전송 기능 테스트', () => {});
-
   it('ts test', () => {
     interface a {
       name: string;
